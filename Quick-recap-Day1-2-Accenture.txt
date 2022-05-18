@@ -1,0 +1,158 @@
+Quick recap 
+
+- Introduction part
+   - Linux vs Enterprise Linux 
+   - What is OS and why used (OS types - Client, Server)
+   - Server (RHEL - Red Hat Enterprise Linux Server - RHEL 8).
+   - As of now (RHEL6/7/8 -in production)
+     NOte: RHEL6 as of now under extended support.
+
+- Basic commands and utilities 
+   - Basic commands.
+      whoami, pwd, ls, which, cd , cd .. (cd ../..), cd - , mkdir, rm, rmdir, tree, 
+   - Concepts of commands 
+     "COmmand Options Argument" 
+	  cp -r dir1 dir2 
+	  command - It's utility to perform any action.
+	   NOte: Every command having manual pages and help option.
+	   man command_name (man 1 command_type_1 or man 8 command_type_2)
+	   command_type_1 - /bin or /usr/bin 
+	   command_type_2 - /sbin or /usr/sbin 
+	   
+	   command --help 
+	   
+	   Option - Which modify the behaviour of the command.
+	    NOte: All option details can be get via manual pages.
+		
+	   Argument - Data required to execuite coammnds.
+	   NOte: All option details can be get via manual pages.
+	   
+	- Read Manual pages 
+	   man 1 cp or man 8 useradd or man 5 shadow 
+	   
+	   /string  (this is for search for given string).
+	   TYpe "n" for next search 
+	   Type "N" for Previous seach 
+	   Type "G" to reach to last line of the page.
+	   Type "g" to reach the top line of the manual page.
+	   Type "q" for quit 
+	   
+	 - Directory and file creations(operations onf it).
+	  - mkdir  - TO create dir  
+	  - touch  - To create emply file 
+	  - vim    - Editor to create file with some contents.
+	    vim file_name 
+		PRESS key "i" - Insert mode (ONly in insert mode you can write/update the file).
+		Type your contents 
+		Again type your contents 
+		...
+		...
+		Press "Ese" key to lock the screen (it's lock mode).
+		Press ":wq"   - Recommended one
+		Press ":wq!"  - This is forcefully saved and closed.
+	   
+	   - cat - to see the contents of file 
+	   - grep - to get the perticular line (as per given string).
+Take   - tail, head,wc, STDIO, STDIN, STERR, redirector (>, >>, 2> or &> and |). 
+
+
+      - Absolute abd relative path 
+	  - Linux hierarchy tree (default directories "/"). 
+      
+- User management 
+       - Users
+       - Type of users (Admin user - root, Normal user - john, user1, system user).
+       - Groups 
+       - Type of groups (Primary Group, 2ndry Group).
+	     NOte: 
+		  Primary group info (/etc/passwd)
+		  2ndry group info  - /etc/group 
+		  
+	   - Password (/etc/shadow)
+	   - HOme directory & mail dir 
+	       HOme dir  - /home/user_name 
+		   Mail file - /var/spool/mail/username 
+		   
+	   - commands (user management commands).
+	      - useradd 
+		  - userdel 
+		  - usermod 
+		  - groupadd
+		  - groupmod 
+		  - groupdel 
+		  - passwd (echo redhat | passwd --stdin user_name).
+		  - chmod (chmod 755 file/dir - 7 means = read(4)+write(2)+execute(1), 7 for owner, next 5 for groupowner, last 5 for other).
+		  - chown ( chown user:groupowner file/dir , chmod root:unixadm /ORG, only root can change the ownership).
+		    ownership can be group or direct owner.
+	      - umask  - It provide default directories/files permission.
+          - chage 
+		  
+		  
+       - Important files w.r.t User management.
+        /etc/passwd   (7 fields, each are seprated by ":")
+   		/etc/group    (4 fields)
+		/etc/shadow   (9 fields)
+		/etc/login.def (This file refered when we execute user management commands. 
+       
+	    Note: To know more about above files, please use manual 5th page eg: (man 5 passwd).
+		
+	   - SUID, SGID, StickyBit 
+	   - SUID explained - When SUID setup on any executable file then as per the permission and ownership (explained below).
+	      a) When SUID setup on any executable file.
+		      - HOw to set SUID - chmod 4<default-premission-continue> file_name 
+			    Example: ls -l /usr/bin/passwd 
+				
+				-rwxr-xr-x   root root <SOME-info> /usr/bin/passwd 
+				
+				Owner - root 
+				Group-Owner - root 
+				
+				  default-premission on this file is - 755 (owner permission=r+w+x, group=r+x, other=r+x)
+                 It mean anyone can execute this file (/usr/bin/passwd)
+				 
+				 chmod 4755 /usr/bin/passwd
+			  - SUID mean - when anyone execute mentioned file (/usr/bin/passwd) then it will execute as owner of this file.
+			     Everyone execuite mentioned file as root user.
+			  
+		   b) What "/usr/bin/passwd" file will do ?
+			    It change the password and update in "/etc/shadow" file.
+				Even we don't have permission on "/etc/shadow - 000 ) but after that also any user able to update password to this file using "/usr/bin/passwd").
+			  
+        - SGID explained - When SGID setup on any executable dir then as per the permission and ownership (explained below).
+	      a) When SGID setup on any directory.
+		      HOw to set SGID - chmod 2<default-premission-continue> file_name 
+			    Example: ls -l /ORG 
+				
+				drwxrwx---  root unixadm <SOME-info> /ORG  
+				
+				Owner - root 
+				Group-Owner - unixadm 
+				
+				  default-premission on this file is - 770 (owner permission=r+w+x, group=r+w+x, other=---)
+                 It mean only root and users belongs to "unixadm" group can access "/ORG" - Normal permission (770)
+				 
+				 chmod 2770 /ORG 
+				 ls -ld /ORG 
+				 drwxrws---  root unixadm /ORG 
+				 
+				 When SUID setup on "/ORG" directory.
+				 Now if any file or directory created under "/ORG", it will automatically get same group ownership what you can set on "/ORG" 
+				 
+				 
+				 
+ 		- StickyBit:-
+		    It mean when stickybit setup then no one can delete the files/dir of others (even having full permission).
+			- ONly root and owner of the file/dir can delete the file.
+			
+			 chmod 1777 /tmp_my 
+			 ls -ld /tmp_my 
+			 drwxrwxrwt   root root /tmp_my 
+			
+			
+		
+		
+
+				 
+	   
+        		
+	   
