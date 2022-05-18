@@ -58,6 +58,7 @@ Take   - tail, head,wc, STDIO, STDIN, STERR, redirector (>, >>, 2> or &> and |).
 
       - Absolute abd relative path 
 	  - Linux hierarchy tree (default directories "/"). 
+	  - vimtutor 
       
 - User management 
        - Users
@@ -148,11 +149,161 @@ Take   - tail, head,wc, STDIO, STDIN, STERR, redirector (>, >>, 2> or &> and |).
 			 ls -ld /tmp_my 
 			 drwxrwxrwt   root root /tmp_my 
 			
-			
-		
-		
+=================================================================================================================
+Q1 ) Create file with below line
 
-				 
-	   
-        		
-	   
+ This is my 1st day 
+ This is my 2nd day 
+ continue till 10th day 
+ 
+Q2 ) Reeplac "This" to "THIS"
+
+Q3) Copy 17-23 line from file (/etc/passwd) to file_q3.txt using redirectors (>,tail, head ).
+
+Q4) output of  file "file_q3.txt" to file5.txt (all output in upper case).
+
+==============================================
+Soft Link:-
+
+mkdir work 
+cd work 
+pwd
+cp -r /etc/passwd .
+ls -l
+mkdir data 
+mv passwd data/
+tree 
+ln -s data/passwd sl_passwd
+ls -l 
+     sl_passwd --> data/passwd 
+
+
+So anythings on any file (sl_passwd or data/passwd), both file have same contents all the time.
+
+rm -rf data/passwd 
+
+
+Then your soft link will be called dead link.
+
+
+With softlink - Both file have different Inode Number.
+
+ls -li /file_name - absolute path.
+
+--------
+Hard link 
+ln source hardlink 
+ln /data_source link
+
+===================
+mkdir work 
+compress "/etc" folger -tar, bunZup, gunzip 
+ and verify it
+
+
+- Specific name of file (Login as root)
+  find / -name passwd 
+  
+- File which is having ownership u1 and group ownership "unixteam"
+==========================
+Process Management:- 
+ What is process ?  - Program under execution called process.
+  
+  Execute the program, it become process.
+ What is program ?
+   "Set of instructions" why to perform some task.
+   
+   /bin or /usr/bin    - Program not required root access 
+   /sbin or /usr/sbin  - Programs required root previlege 
+
+  commands are programs please in (/sbin or /bin - /usr/bin or /usr/sbin).
+  All programs under above dir having executable permission (other having executable access).
+  
+  Program under execution become process and evry process having major components.
+  PID - Process ID 
+  PPID - Parent Process ID.
+  UID or one or more GID.    (Every PID associated with one UID)
+  UID = User ID 
+  GID = Group ID 
+
+  ps -aef     - All process 
+  ps -eo pcpu,pid,ppid,stat,comm | head -1 ; ps -eo pcpu,pid,ppid,stat,comm |sort -nr | head -5
+  ps -eo pcpu,pid,ppid,stat,comm | head -1 ; ps -eo pcpu,pid,ppid,stat,comm |sort -nr | head -10
+  
+  ps -eo pmem,pid,ppid,stat,comm | head -1 ; ps -eo pmem,pid,ppid,stat,comm |sort -nr | head -5
+  ps -eo pmem,pid,ppid,stat,comm | head -1 ; ps -eo pmem,pid,ppid,stat,comm |sort -nr | head -10
+  
+  
+=============== 
+Process Priority 
+nice 
+renice 
+
+Minimum the number max the priority.
+-20 to +19 
+
+reset the process priority 
+renice -n -19 -p PID 34567
+
+nice -n -19 ./script.sh
+
+ kill -l 
+ kill -19 PID 
+ 
+ 
+ =========================================
+ Package Management:-
+ 
+ package or software - 
+ 
+ When install package/software then only we can use the service 
+ 
+ RPM  - rpm file must be available (locally)
+ YUM  - Repo needed 
+ 
+ Steps to configure YUM.
+ 
+ 1)df -THP  (RHEL8.2 ISO mounted on this system).
+   MOunted on /run/media/rsp/RHEL8.2-BaseOS 
+ 
+ 2) mkdir -p /var/www/html/repo
+    Note: Creating this folder to copy all the DVD/ISO contents to "/var/www/html/repo"
+	
+ 3) Now access packages location and copy all contents 
+    cd /run/media/rsp/RHEL8.2-BaseOS 
+	cp -rv * /var/www/html/repo/
+	
+	NOte: Once copy complated then
+	
+ 4) Create local repos 1st 
+    cd /etc/yum.repos.d/
+	vim local.repo 
+	[local_repo_BaseOS]
+	name= Local RHEL8.2 repo 
+	baseurl = file:////var/www/html/repo/BaseOS 
+	gpgcheck = 0 
+	enabled = 1
+	
+   [local_repo_AppStream]
+	name= Local RHEL8.2 repo 
+	baseurl = file:////var/www/html/repo/AppStream
+	gpgcheck = 0 
+	enabled = 1
+	
+	:wq
+	
+5) yum clean all ; yum repolist 
+
+6) yum install httpd 
+
+	
+	
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+ 
