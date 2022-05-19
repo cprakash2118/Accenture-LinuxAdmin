@@ -490,6 +490,64 @@ nice -n -19 ./script.sh
 	nmcli connect reload accenture-network-dhcp
 	nmcli connection show 
 	
+	
+	
+	As per Production
+	Multiple Domain:-
+     example.com	
+	ELlab.example.com
+	k8lab.example.com
+	
+	
+	
+	
+	=================
+	Web application - 
+	
+	http://localhost 
+	
+	
+	vim /etc/hosts  (local name resolution file)
+	
+	
+	
+	firewall-cmd --permanent --add-service=http 
+	firewall-cmd --reload 
+	
+	firewall-cmd --permanent --add-service=https
+	firewall-cmd --reload 
+	
+	firewall-cmd --permanent --add-service=dhcp
+	firewall-cmd --reload 
+	
+	firewall-cmd --permanent --add-port=80/tcp 
+	firewall-cmd --reload 
+
+	firewall-cmd --permanent --add-port=80/udp 
+	firewall-cmd --reload 
+	
+	
+	firewall-cmd --list-all 
+	
+	cat /etc/firewalld/zones/public.xml 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	OCPlab.example.com
+	
+	
+	
+	
+	
 
 
   
