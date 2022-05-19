@@ -470,7 +470,7 @@ nice -n -19 ./script.sh
    
   3) Connection modified.
 
-   nmcli connection modify accentrure-network01 ipv4.address 172.20.0.152/24 ipv4.gateway 172.20.0.1 ipv4.dns 172.20.0.1 ipv4.dns-search lab.example.com 
+   nmcli connection modify accentrure-network01 ipv4.address 172.20.0.152/24 ipv4.gateway 172.20.0.1 ipv4.dns 172.20.0.1 ipv4.dns-search lab.example.com method none 
 
   4) Connection reload
     nmcli connection reload accentrure-network01
