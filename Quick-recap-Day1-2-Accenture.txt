@@ -483,6 +483,13 @@ nice -n -19 ./script.sh
 	
 	reboot your machine once (reboot actually not required as per production, but we are trying to make it).
 	
+	
+	nmcli connection add con-name accenture-network-dhcp ifname eth0 autoconnect yes 
+	nmcli connection modify accenture-network-dhcp method auto 
+	nmcli connect up accenture-network-dhcp
+	nmcli connect reload accenture-network-dhcp
+	nmcli connection show 
+	
 
 
   
