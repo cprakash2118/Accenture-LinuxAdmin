@@ -397,7 +397,94 @@ nice -n -19 ./script.sh
 	# crontab -u user -e 
 	# crontab -u root -l 
  
- 
+ ===================================
+ Setup hostname and IP address 
+  1) Login as root 
+    $ pwd
+	 rps user 
+    $ su - 
+	 passwd: rps@12345
+    # whoami 
+	root 
+	# cat /etc/hostname 
+	localhost 
+	# hostnamectl set-hostname server-01.lab.example.com 
+	# hostname 
+	server-01.lab.example.com 
+	Note: hostnamectl add hostname entry permanently to "/etc/hostname" 
+	
+	# reboot 
+	NOte: Make sure your passwd 
+	# passwd rps 
+	rps@12345
+	# passwd root
+	rps@12345
+	# reboot (Want to make sure after reboot, hostname presist)
+=
+ Setup Static IP and Dynamic IP:- 
+  What is IP address ?
+   32 bits logical address (dot decimal format)
+    1-127     - Class A IP range 
+	128-191   - Class B 
+	192-223    - Class C
+	======================
+	224-239    - Class D  
+	240-255    - Class E 
+  
+  # ifconfig (But this interface almost decomm - it's recommeneded to use ip command)
+  # ip add show 
+  
+  Static IP - IP address setup Manually (specific IP set)
+  Dynamic IP - (IP address provided by DHCP)
+  
+  
+  Setup the ip Address 
+  Current IP address - 172.20.0.152/24  (CIDR is 24 (8+8+8+0) = 255.255.255.0)
+   
+   172.20.0.152/24
+    172.20.0.0    - Network Address (Can not be assigned to any host).
+	172.20.0.1    - 1st IP aggress
+	172.20.0.2    - 2nd IP address 
+	..
+	..
+	..
+	172.20.0.254  - Last IP address 
+	172.20.0.255  - BC address  (Can not be assigned to any host).
+	
+    No of hosts: 2^8 -2 = 256 - 2 
+	            = 254 
+  
+  New IP need to setup. 
+  IP address  : 172.20.0.152
+  Subnet Mask : 24 
+  Gateway     : 172.20.0.1 
+  DNS or nameserver - 172.20.0.1
+  
+  1) Show your system connection 
+    nmcli connection show  (use lab here )
+	nmcli device show 
+	
+  2) Setup new connection 
+   nmcli connection add con-name accenture-network01 autoconnect yes ifname ens32 type ethernet 
+   nmcli connection show 
+   
+  3) Connection modified.
+
+   nmcli connection modify accentrure-network01 ipv4.address 172.20.0.152/24 ipv4.gateway 172.20.0.1 ipv4.dns 172.20.0.1 ipv4.dns-search lab.example.com 
+
+  4) Connection reload
+    nmcli connection reload accentrure-network01
+	
+  5) Backend work 
+    cat /etc/sysconfig/scripts-network/ifcfg-accenture-network01 
+	
+
+
+  
+  
+  
+  
+  
  
  
  
