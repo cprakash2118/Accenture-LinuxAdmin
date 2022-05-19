@@ -478,6 +478,11 @@ nice -n -19 ./script.sh
   5) Backend work 
     cat /etc/sysconfig/scripts-network/ifcfg-accenture-network01 
 	
+	If static not working (update in the file "ifcfg-accenture-network01")
+	DHCP=none 
+	
+	reboot your machine once (reboot actually not required as per production, but we are trying to make it).
+	
 
 
   
