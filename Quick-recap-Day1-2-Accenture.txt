@@ -263,45 +263,139 @@ nice -n -19 ./script.sh
  
  Steps to configure YUM.
  
- 1)df -THP  (RHEL8.2 ISO mounted on this system).
+ 1) df -THP  (RHEL8.2 ISO mounted on this system - iso9960).
    MOunted on /run/media/rsp/RHEL8.2-BaseOS 
- 
+   
+    # df -THP 
+   
  2) mkdir -p /var/www/html/repo
     Note: Creating this folder to copy all the DVD/ISO contents to "/var/www/html/repo"
 	
+	
+	# mkdir -p /var/www/html/repo
+	
  3) Now access packages location and copy all contents 
-    cd /run/media/rsp/RHEL8.2-BaseOS 
-	cp -rv * /var/www/html/repo/
+    
+	# cd /run/media/rsp/<Press-TAB>
+	# pwd
+	# ls 
+	# cp -rv * /var/www/html/repo/
+	
+	Below steps for verification.
+	
+	# ls -l /var/www/html/repo/BaseOS 
+	# ls -l /var/www/html/repo/AppStream 
 	
 	NOte: Once copy complated then
 	
  4) Create local repos 1st 
-    cd /etc/yum.repos.d/
+ 
+  # cd /etc/yum.repos.d/
+
 	vim local.repo 
 	[local_repo_BaseOS]
 	name= Local RHEL8.2 repo 
-	baseurl = file:////var/www/html/repo/BaseOS 
+	baseurl = file:///var/www/html/repo/BaseOS 
 	gpgcheck = 0 
 	enabled = 1
 	
    [local_repo_AppStream]
 	name= Local RHEL8.2 repo 
-	baseurl = file:////var/www/html/repo/AppStream
+	baseurl = file:///var/www/html/repo/AppStream
 	gpgcheck = 0 
 	enabled = 1
 	
 	:wq
+
+    NOte: Do ls (/etc/yum.repos.d/) only see local.repo file (rest all move to /tmp)
+    Eg: redhat.repo , mv redhat.repo /tmp )	
 	
 5) yum clean all ; yum repolist 
 
 6) yum install httpd 
 
+7) systemctl start httpd	
 	
+ 
+ =================================================
+  Job scheduling 
+  Crontab - 
+ 
+  systemctl 
+  
+ - install apache   ( # yum install httpd)
+ - Start apache     ( # systemctl start httpd)
+ - Enable apache    ( # systemctl enable httpd 
+ - Configure apache ( # vim /etc/httpd/conf.d/anyfile_name.conf or defult config file - /etc/httpd/conf/httpd.conf ) 
+ - Deploy application on apache  (
+ 
+ apache = httpd 
+ 
+  As per apache service.
+   Apache package name = httpd 
+   Apache service name = httpd or httpd.service 
+   APache config file /etc/httpd/conf.d/anyfile_name.conf or defult config file - /etc/httpd/conf/httpd.conf ) 
+   
+ 
+ 
+   Crontab - 
+   Crontab package = crontabs (# yum install crontabs)
+   Service = crond  or crond.service 
+   Configuration - /etc/crontabs 
+   =============
+   Verify the crontab package (installed or not) 
+    - # yum info crontabs or rpm -qa | grep crontabs 
 	
- 
- 
- 
- 
+   Verify the crontab service running or not 
+     # systemctl status crond 
+	 
+	  status/start/restart/stop 
+	  
+	  
+	  
+	  Setup jobs as per below.
+	  
+	  1) Every 12:15 mins i want to run jobs (some script).
+	  
+	    15 12 * * * echo "This is my command"
+		
+	 2) Every 12:15 time only 15th day of the month
+        15 12 15 * * 	echo "This is my command"
+
+     3) Every 12:15 time only 15/19/23/26 day of the month
+
+        15 12 	15,19,23,26 * *  echo "This is my command"
+		
+	 4) Every 12:15 time only 15/19/23/26 day of the month, in the month of march/July/Oct 
+	    15 12 	15,19,23,26 03,07,10 *  echo "This is my command"
+		
+		
+     5) Every 12 to 15 time only 15-19/23/26 day of the month, in the month of march to july and Sept to Nov 
+		
+	    * 12-15 15-19,23,26   03-07,09-11  * echo "This is my command"
+		
+	6)  Every 12 to 15 time by Tues-Fri, in the month of march to july 
+	      * 12-15 * 03-07 02-05 echo "This is my command"
+		  
+	7) Every 10 mins from 12 to 15 time only 15-19/23/26 day of the month, in the month of march to july and Sept to Nov	  
+	  
+	  
+	  */10 12-15 * 03-07 02-05 echo "This is my command"
+	  
+	   12:10 
+	   12:20
+	   12:30
+	   12:40
+	   12:50
+	   01:00
+	   01:10
+	   ..
+	   ..
+	   14:50
+	   15:00 
+    
+	# crontab -u user -e 
+	# crontab -u root -l 
  
  
  
