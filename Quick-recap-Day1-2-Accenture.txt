@@ -780,6 +780,26 @@ Step 3) Start/Enable http
 	
 	NOte: Is you have passwordless auth, then no password required.
 	
+	===========================================
+	Configure local storage
+	# lsblk 
+	# lsblk -fp 
+	# lsblk /dev/sdc 
+	
+	Disk used for FS 
+	
+	# mkfs -t ext4 /dev/sdc 
+	# blkid /dev/sdc
+	# mount /dev/sdc /data01 
+	This is call temp mount.
+	
+	# reboot (after reboot MP will work.
+	
+	# blkid /dev/sdc 
+	# vim /etc/fstab 
+	device mount_point FS options dumpFreq FSCK 
+	1          2        3   4       5          6
+	
 	
 	  
 	  
