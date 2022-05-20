@@ -914,10 +914,44 @@ Step 3) Start/Enable http
 	 
 	 # mount -a 
 	 # df -THP 
+	 ======================================
+	 SWAP partion 
 	 
-	 =========================================
+
+	Step 1) 
+	 
+	 - Linux partitions creation using parted 
+	 
+	 
+	# parted /dev/sdb mklabel msdos  (1st command to create partition).
 	
+	If it's not 1st time then start from below.
+	N number of partition can be created.
 	
+	# parted /dev/sdb 
+	mkpart 
+	  --> Primary/Extended : Primary
+	  --> File System type : ext4 
+	  start? 2048s
+	  end?   1001MB 
+	  quit 
+	  
+	# parted /dev/sdb print 
+	# udevadm settle  (It will update to kernel, regarding partition table).
+
+
+    # mkswap /dev/sdb6 
+    # blkid /dev/sdb6
+    vim update in /etc/fstab 
+     
+    UUID   swap swap defaults 0 0 
+
+    # mount -a 
+    # swapon -s 
+    # free -m -t 
+    # swapon -a 
+    # swapon -s 
+    # free -m -t 
 	
 	  
 	  
