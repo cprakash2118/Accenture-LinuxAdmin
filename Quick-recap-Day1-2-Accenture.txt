@@ -748,6 +748,38 @@ Step 3) Start/Enable http
 	# systemctl reboot
 	
 	
+	================================
+	Copying data remotely 
+	using scp and rsync
+	Note: 
+	- rsync is recommeneded 
+	- Both using ssh connection (it mean if sshd service not running, scp and rsync will not work to that server).
+	Suppose 
+	server name - servera 
+	User name   - root 
+	Source      - /data01 
+	
+	Server name - serverb 
+	User name   - admin
+	destination - /var/data01 
+	
+	
+	# whomai 
+	root 
+	# hostname 
+	servera 
+	
+	# scp -r /data01 admin@serverb:/var/data01
+    It will ask for user "admin" password.
+    and user admin must be having (read & Write & Execute ) permission on directory "/var/data01"
+
+
+    # rsync -avz /data01 admin@serverb:/var/data01	
+	It will ask for user "admin" password.
+    and user admin must be having (read & Write & Execute ) permission on directory "/var/data01"
+	
+	NOte: Is you have passwordless auth, then no password required.
+	
 	
 	  
 	  
