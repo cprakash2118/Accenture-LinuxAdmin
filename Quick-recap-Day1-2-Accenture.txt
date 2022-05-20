@@ -952,6 +952,25 @@ Step 3) Start/Enable http
     # swapon -a 
     # swapon -s 
     # free -m -t 
+=============================================================================
+
+   File Sharing – NFS and SAMBA
+   
+   - NFS used for file sharing between Linux/UNIX based OS 
+    Step 1) INstall NFS packages (nfs-server)
+	Step 2) mkdir /data01 
+	       vim /etc/export
+		   /data01   *(rw)
+		   
+		  $ export -fs 
+	Step 3) systemctl start nfs-server 
+	        systemctl enable nfs-server 
+	Step 4) Add NFS port to firewalld 
+	
+   
+   - Samba  used of file sharing service between Window and Linux/Unix 
+     Samba server building on Linux Machine.
+   
 	
 	  
 	  
