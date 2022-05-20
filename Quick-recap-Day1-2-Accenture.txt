@@ -568,10 +568,14 @@ nice -n -19 ./script.sh
    Enfocring
    # setenforce 0  (premission)
    # setenforce 1  (Enfocring)
+   # /etc/httpd/conf.d/any_file_name.conf 
    
    
-   Custom apache file -
+Step 1) 
+Custom apache file - copy below contents.
 
+ # vim /etc/httpd/conf.d/anyfile.conf 
+ 
 <VirtualHost *:81>
  ServerAdmin webmaster@server-01.lab.example.com
  ServerName server-01.lab.example.com
@@ -587,9 +591,15 @@ nice -n -19 ./script.sh
 </VirtualHost>
    
    
+Step 2) .
+# vim /vhots/index.html 
+This is my web server !!
 
 
 
+Step 3) Start/Enable http 
+ # systemctl start httpd 
+  # systemctl enable httpd 
 
 	
 	
