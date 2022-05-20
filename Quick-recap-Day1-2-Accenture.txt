@@ -530,7 +530,67 @@ nice -n -19 ./script.sh
 	firewall-cmd --list-all 
 	
 	cat /etc/firewalld/zones/public.xml 
+
+=============================================
+ user1-5   (unix)
+ user6-10  (middleware)
+ user11-15 (app1)
+ 
+ user51 to 60 (not belongs to above groups).
+ 
+ Set ACL under /ORG
+  
+  getfacl /ORG/APP1
+  setfacl -m u:user1:rwx /ORG/APP1
+  setfacl -m g:goupname:rwx /ORG/UNIX 
+  
+  ========================
+  Selinux (Security Enhanced Linux (SELinux):-
+  Security policies with respect to 
+    - contests (SELinux permission over file/dir)
 	
+	Owner,GroupOwner,other, w.r.t (contest of the file/dir - Additional permission on file/dir 
+	
+	
+	- Booleans (SELinux w.r.t to booleands)
+	    http_nfs_service --> off 
+		https service can not be use with NFS service.
+	  
+	
+  ls -ld /etc/sysconfig/selinux or /etc/sysconfig/selinux 
+  
+    Enfocring   - All SELinux policies loaded in the server.
+	premissiove - Policies not loaded only wornings 
+	disabled    - NO policies loaded 
+  
+
+   # getenforce 
+   Enfocring
+   # setenforce 0  (premission)
+   # setenforce 1  (Enfocring)
+   
+   
+   Custom apache file -
+
+<VirtualHost *:81>
+ ServerAdmin webmaster@server-01.lab.example.com
+ ServerName server-01.lab.example.com
+ ErrorLog logs/server-01-error.log
+ CustomLog logs/server-01-common.log common
+ DocumentRoot /vhost
+ 
+ <Directory /vhost>
+ Options +Indexes +FollowSymlinks +Includes
+ Order allow,deny
+ Allow from all
+ </Directory>
+</VirtualHost>
+   
+   
+
+
+
+
 	
 	
 	
