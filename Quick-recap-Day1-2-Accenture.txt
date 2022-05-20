@@ -841,7 +841,82 @@ Step 3) Start/Enable http
 	
 	
 	===========================
-	Now logical VOlume Manager (LVM)
+	Now logical VOlume Manager (LVM)  (Primary, extended and under extended we have logical partition)
+	
+	Step 1) 
+	 
+	 - Linux partitions creation using parted 
+	 
+	 
+	# parted /dev/sdb mklabel msdos  (1st command to create partition).
+	
+	If it's not 1st time then start from below.
+	N number of partition can be created.
+	
+	# parted /dev/sdb 
+	mkpart 
+	  --> Primary/Extended : Primary
+	  --> File System type : ext4 
+	  start? 2048s
+	  end?   1001MB 
+	  quit 
+	  
+	# parted /dev/sdb print 
+	# udevadm settle  (It will update to kernel, regarding partition table).
+
+
+    Suppose 3 partition created.
+	 
+	Step 2) 
+	  - Create physical volume 
+	   pvcreate /dev/sdb2 /dev/sdb3 /dev/sdb4 
+	   pvs
+	   pvscan 
+	   pvdisplay
+
+	
+	Step 3) 
+	  - Create Volume Group 
+	  
+	  # vgcreate -s 4M vgname /dev/sdb2 /dev/sdb3 /dev/sdb4 
+	  # vgscan 
+	  # vgs
+	  # vgdisplay 
+	  
+	  Support VG size is = No of PE 740 * PE side (4M) 
+	     VG size = 740 * 4 MB 
+		 
+	  
+	Step 4) 
+	  - Create Logical Volume manager 
+	
+	lvcreate -l no_of_PE -n LVM_name vgname 
+	lvs
+	lvscan 
+	lvdisplay 
+	
+	
+	Step 5) 
+	  - Create File System on LVM.
+	  
+	LVM path /dev/vgname/lvname 
+                           
+						   
+     mkfs -t ext3  	/dev/vgname/lvname 
+	 
+	 blkid /dev/vgname/lvname 
+	 
+	 UUID 
+	 
+	 vim /etc/fstab 
+	 
+	 Update the entry 
+	 
+	 # mount -a 
+	 # df -THP 
+	 
+	 =========================================
+	
 	
 	
 	  
