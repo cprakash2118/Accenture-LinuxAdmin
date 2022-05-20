@@ -738,6 +738,16 @@ Step 3) Start/Enable http
 	   and your machine might take 1,2,3 mins time to reload the SELinux policies, once all policies loaded then again it might reboot your system.
 	   once system up and verify your changes.
 	   
+	   
+	========================
+	# who -r 
+	# systemctl set-default multi-user.target   (runlevel -3 - Network + CLI)
+	# systemctl reboot 
+	# 
+	# systemctl set-default graphical.target    (runlevel -5 - Network + GUI --> CLI )
+	# systemctl reboot
+	
+	
 	
 	  
 	  
