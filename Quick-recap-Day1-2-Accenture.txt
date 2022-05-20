@@ -316,6 +316,19 @@ nice -n -19 ./script.sh
 
 7) systemctl start httpd	
 	
+ ======================
+ package module streams
+ - BaseOS    (baseurl)
+ - AppSteam  (baseurl)
+ 
+  MOdule Stream
+ 
+ yum module list 
+ yum module list perl 
+ yum module info perl 
+ yum module list --profile perl:5.24 
+ yum module install perl 
+ 
  
  =================================================
   Job scheduling 
@@ -336,7 +349,7 @@ nice -n -19 ./script.sh
    Apache service name = httpd or httpd.service 
    APache config file /etc/httpd/conf.d/anyfile_name.conf or defult config file - /etc/httpd/conf/httpd.conf ) 
    
- 
+ =
  
    Crontab - 
    Crontab package = crontabs (# yum install crontabs)
@@ -689,7 +702,43 @@ Step 3) Start/Enable http
 		
 		# ssh serverb (it will not ask passwd). 
 	  
+======================================================================
+ Boot, reboot 
+
+ # systemctl reboot 
+ # systemctl shutdown 
+ # who -r 
+   targets & run levels 
+    
+	single user mode (emergency mode) - You will recover your system.
+	
+	Step 1) 
+	 # systemctl reboot 
+	  NOte: Hold your screen by pressing "up and down arrow key"
 	 
+	Step 2) Press "e" for edit (for your reference read the instruction below).
+	
+	     GO to Linux line and press "end" key to some to the last (for that perticular line).
+		 add below instruction 
+		 
+		 rd.break console=tty1 
+		 
+		 then 
+		 
+		 press "Ctrl + x key) - to boot the system as per your provided input.
+		 
+	Step 3) Once you have terminal 
+	   # chroot /sysroot 
+	   # mount -o remount,rw /
+	   # passwd root or ( echo passwd | passwd --stdin root )
+	   # touch /.autorelabel 
+	   # exit 
+	   # exit
+	   
+	   and your machine might take 1,2,3 mins time to reload the SELinux policies, once all policies loaded then again it might reboot your system.
+	   once system up and verify your changes.
+	   
+	
 	  
 	  
 	  
@@ -698,17 +747,6 @@ Step 3) Start/Enable http
  
  
  
- 
- 
- 
- 
-	
-	
-	
-	
-	
-	
-	OCPlab.example.com
 	
 	
 	
