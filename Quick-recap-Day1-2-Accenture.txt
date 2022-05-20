@@ -800,6 +800,49 @@ Step 3) Start/Enable http
 	device mount_point FS options dumpFreq FSCK 
 	1          2        3   4       5          6
 	
+	======================================
+	Disk partitions
+	- As per MBR - we can create max 4 primary partition 
+	- As per MBR - We cab create max 1-3 primary partitions and 1 extended partition, under extended partition we can create 
+	logical partition.
+	
+	- Logical partion can not be created until extended partition not ready (logical partition take size from extended partition).
+	Suppose you have given 10Gb size to extended partition then only 10Gb can be alocated to logical partition.
+	
+	
+	# lsblk 
+	# lsblk -ft 
+	# parted /dev/sdb 
+	# mklabel 
+	# msdos 
+	# mkpart 
+	
+	or 
+	# parted /dev/sdb mklabel msdos  (1st command to create partition).
+	# parted /dev/sdb 
+	mkpart 
+	  --> Primary/Extended : Primary
+	  --> File System type : ext4 
+	  start? 2048s
+	  end?   1001MB 
+	  quit 
+	  
+	# parted /dev/sdb print 
+	# udevadm settle  (It will update to kernel, regarding partition table).
+	# mkfs -t ext4 /dev/sdb1 
+	# blkid /dev/sdb1 
+	# mkdir /data02_mp 
+	# vim /etc/fstab 
+	UUID   MP   FS   defaults  0 0 
+	
+	:wq 
+	
+	# mount -a 
+	
+	
+	===========================
+	Now logical VOlume Manager (LVM)
+	
 	
 	  
 	  
